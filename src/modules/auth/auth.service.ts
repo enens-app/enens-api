@@ -108,6 +108,7 @@ export class AuthService {
   }
 
   async getCurrentUserFromToken(token: string): Promise<UserSchema> {
+    console.log("🚀 ~ AuthService ~ getCurrentUserFromToken ~ token:", token)
     try {
       const decoded = this.jwtService.verify<AuthJWTPayload>(token);
   

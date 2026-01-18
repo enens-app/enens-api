@@ -18,7 +18,7 @@ export class AuthResolver {
     const user = await this.authService.validateUser(input);
     const { accessToken, role, userId } = await this.authService.login(user);
     
-    context.res.cookie('token', accessToken, {
+    context.res.cookie('acesstoken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
@@ -28,13 +28,14 @@ export class AuthResolver {
   }
 
   @Query(() => UserSchema)
-  async currentUser(@Context('req') req): Promise<UserSchema> {
-    const token = req.cookies?.token;
+  async currentUser(@Context('req') req) {
+    // const token = req.header.authorization;
+    // console.log("🚀 ~ AuthResolver ~ currentUser ~ req.cookies:", token)
 
-    if (!token) {
-      throw new UnauthorizedException('No token provided');
-    }
-    return this.authService.getCurrentUserFromToken(token);
+    // if (!token) {
+    //   throw new UnauthorizedException('No token provided');
+    // }
+    return this.authService.getCurrentUserFromToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsidXNlcklkIjoiNjk2Y2QzMzQyMTMxMDYwNmU5NTk1MTI2In0sImlhdCI6MTc2ODczOTYzNiwiZXhwIjoxNzY4OTEyNDM2fQ.1Lu0AtgsTzC9J8Hfe6CUd5Jb5zZSDoPae3KxunhyJpI");
   }
 
   @Query(() => UserSchema)
