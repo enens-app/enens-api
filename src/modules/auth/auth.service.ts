@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash, verify } from 'argon2';
@@ -22,8 +28,9 @@ export class AuthService {
   ) {}
 
   async registerUser(input: CreateUserInput) {
-    
-    const isUnique = await this.userRepo.findOne({ where: { email: input.email } });
+    const isUnique = await this.userRepo.findOne({
+      where: { email: input.email },
+    });
     if (isUnique) {
       throw new HttpException(
         {
@@ -88,8 +95,8 @@ export class AuthService {
 
   async findById(id: string): Promise<UserSchema> {
     const user = await this.userRepo.findOneBy({
-      _id: new ObjectId(id)
-    })
+      _id: new ObjectId(id),
+    });
     if (!user) {
       throw new NotFoundException(`User with email ${id} not found`);
     }
@@ -108,16 +115,15 @@ export class AuthService {
   }
 
   async getCurrentUserFromToken(token: string): Promise<UserSchema> {
-    console.log("🚀 ~ AuthService ~ getCurrentUserFromToken ~ token:", token)
     try {
       const decoded = this.jwtService.verify<AuthJWTPayload>(token);
-  
+
       const userId = decoded.sub.userId;
-  
+
       const user = await this.userRepo.findOneByOrFail({
         _id: new ObjectId(userId),
       });
-  
+
       return user;
     } catch (err) {
       throw new UnauthorizedException('Invalid or expired token');

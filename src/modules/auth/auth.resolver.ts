@@ -29,7 +29,7 @@ export class AuthResolver {
 
   @Query(() => UserSchema)
   async currentUser(@Context('req') req) {
-    const token = req.header.authorization;
+    const token = req.cookies?.access_token;
 
     if (!token) {
       throw new UnauthorizedException('No token provided');
