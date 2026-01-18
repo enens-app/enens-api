@@ -23,6 +23,7 @@ import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
       sortSchema: true,
       introspection: true,
       playground: true,
+      context: ({ req, res }) => ({ req, res }),
     }),
     TypeOrmModule.forRoot(ormConfig()),
     AuthModule, CampagnModules
