@@ -18,7 +18,7 @@ export class AuthResolver {
     const user = await this.authService.validateUser(input);
     const { accessToken, role, userId } = await this.authService.login(user);
     
-    context.res.cookie('acesstoken', accessToken, {
+    context.res.cookies('acesstoken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
