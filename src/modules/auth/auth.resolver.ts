@@ -18,11 +18,11 @@ export class AuthResolver {
     const user = await this.authService.validateUser(input);
     const { accessToken, role, userId } = await this.authService.login(user);
     
-    context.res.cookies('acesstoken', accessToken, {
+    context.res.cookie('acessToken', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 7 * 24 * 60 * 60 * 1000
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return { accessToken, role, userId }
   }
