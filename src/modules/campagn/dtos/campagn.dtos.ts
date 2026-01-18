@@ -5,13 +5,13 @@ import { ObjectId } from "mongodb";
 @InputType()
 export class CreateCampagnInput {
   @Field({ nullable: true })
-  campagnName: string
+  campagnName?: string
 
   @Field(() => [CAMPAGN_TYPE], { nullable: true })
-  campagnType: CAMPAGN_TYPE[]
+  campagnType?: CAMPAGN_TYPE[]
 
   @Field({ nullable: true })
-  description: string
+  description?: string
 
   @Field(() => String)
   authorId: string

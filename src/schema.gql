@@ -19,7 +19,7 @@ enum CAMPAGN_TYPE {
   PROMO_CAMPAGNE
 }
 
-type Campagn {
+type Campagns {
   _id: ID!
   authorId: ID!
   campagnName: String
@@ -61,17 +61,18 @@ input CreateUserInput {
 }
 
 type Mutation {
-  createNewCampagn(input: CreateCampagnInput!): Campagn!
+  createNewCampagn(input: CreateCampagnInput!): Campagns!
   login(input: ConnectUserInput!): AuthPayload!
   signUp(input: CreateUserInput!): User!
 }
 
 type Query {
   currentUser: User!
-  getAllCampagns: [Campagn!]!
+  findCampagnById(id: String!): Campagns!
+  getAllCampagns: [Campagns!]!
   getHello: String!
   getUserById(id: String!): User!
-  getUserCampagns(authorId: String!): [Campagn!]!
+  getUserCampagns(authorId: String!): [Campagns!]!
 }
 
 """The role of the user in the system"""
