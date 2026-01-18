@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
 import { CAMPAGN_TYPE } from '../enum';
 
-@ObjectType('Campagn')
+@ObjectType('Campagns')
 @Entity({ name: 'campagns' })
 export class Campagn {
   @Field(() => ID)
@@ -12,15 +12,15 @@ export class Campagn {
 
   @Field(() => [CAMPAGN_TYPE], { nullable: true })
   @Column()
-  campagnType: CAMPAGN_TYPE[];
+  campagnType?: CAMPAGN_TYPE[];
 
   @Field(() => String, { nullable: true })
   @Column()
-  campagnName: string;
+  campagnName?: string;
 
   @Field(() => String, { nullable: true })
   @Column()
-  description: string;
+  description?: string;
 
   @Field(() => ID)
   @Column()
@@ -36,11 +36,11 @@ export class Campagn {
 
   @Field(() => ID,{ nullable: true })
   @Column()
-  entrepriseId: ObjectId;
+  entrepriseId?: ObjectId;
 
   @Field(() => String)
   @Column({ nullable: true })
-  compagnyName: string;
+  compagnyName?: string;
 
   @Field(() => [String])
   @Column()

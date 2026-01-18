@@ -9,7 +9,6 @@ import { CampagnModules } from './modules/campagn/campagn.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
-import { S3UploadModule } from './modules/aws/S3.module';
 
 @Module({
   imports: [
@@ -26,7 +25,7 @@ import { S3UploadModule } from './modules/aws/S3.module';
       playground: true,
     }),
     TypeOrmModule.forRoot(ormConfig()),
-    AuthModule, CampagnModules, S3UploadModule
+    AuthModule, CampagnModules
   ],
   providers: [AppService, AppController, JWTStrategy],
   
