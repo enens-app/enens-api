@@ -28,14 +28,14 @@ export class AuthResolver {
   }
 
   @Query(() => UserSchema)
-  async currentUser(@Context('req') req) {
-    const token = req.cookies?.access_token;
-
+  async currentUser(@Context() ctx) {
+    const token = ctx?.req?.headers?.authorization;
+    const accessToken = token.split(' ')[1]
     if (!token) {
       throw new UnauthorizedException('No token provided');
-    }
-    return this.authService.getCurrentUserFromToken(token);
-  }
+    };
+    return this.authService.getCurrentUserFromToken(accessToken);
+  };
 
   @Query(() => UserSchema)
   async getUserById(
