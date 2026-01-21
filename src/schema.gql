@@ -71,7 +71,7 @@ type Mutation {
   createNewCampagn(input: CreateCampagnInput!): Campagns!
   login(input: ConnectUserInput!): AuthPayload!
   signUp(input: CreateUserInput!): User!
-  updateCampagnInput(input: CreateCampagnInput!): Campagns!
+  updateCampagnInput(input: UpdateCampagnInput!): Campagns!
 }
 
 type Query {
@@ -87,6 +87,20 @@ type Query {
 enum Role {
   ADMIN
   USER
+}
+
+input UpdateCampagnInput {
+  campagnName: String
+  campagnType: [CAMPAGN_TYPE!]
+  categories: [String!]
+  compagnyName: String
+  contry: String
+  description: String
+  endDate: DateTime
+  id: String!
+  startDate: DateTime
+  subCategories: [String!]
+  thumbnailUrl: String
 }
 
 type User {
