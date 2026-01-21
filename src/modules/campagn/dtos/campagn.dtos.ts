@@ -35,6 +35,7 @@ export class CreateCampagnInput {
   subCategories: string[];
 };
 
+@InputType()
 export class UpdateCampagnInput {
   @Field(() => String)
   id: string;
