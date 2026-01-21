@@ -1,11 +1,19 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { AuthGuard } from '@nestjs/passport';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { AuthService } from '../../auth.service';
+import { UserSchema } from 'src/modules/user/schema/user.schema';
 
 @Injectable()
-export class GqlJwtGuardGuard extends AuthGuard("jwt"){
-  getRequest(context: ExecutionContext) {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req.user;
+export class GqlAuthGuard implements CanActivate {
+  constructor(private readonly authService: AuthService) {}
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const ctx = context.getArgByIndex(2);
+    const authHeader = ctx.req.headers.authorization;
+    if (!authHeader) throw new UnauthorizedException();
+
+    const token = authHeader.split(' ')[1];
+    const user = await this.authService.getCurrentUserFromToken(token);
+    ctx.user = user as UserSchema;
+    return true;
   }
 }
