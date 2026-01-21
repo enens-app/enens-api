@@ -22,10 +22,6 @@ export class Campagn {
   @Column()
   description?: string;
 
-  @Field(() => ID)
-  @Column()
-  authorId: ObjectId;
-
   @Field(() => String, { nullable: true })
   @Column()
   thumbnailUrl?: string;
@@ -49,4 +45,20 @@ export class Campagn {
   @Field(() => [String])
   @Column()
   subCategories: string[];
+
+  @Field(() => ID)
+  @Column()
+  createdBy: ObjectId;
+
+  @Field(() => Date)
+  @Column()
+  createdAt: Date;
+
+  @Field(() => ID, { nullable: true })
+  @Column()
+  updatedBy?: ObjectId;
+
+  @Field(() => Date, { nullable: true })
+  @Column()
+  updatedAt?: Date;
 }

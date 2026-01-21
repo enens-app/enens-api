@@ -13,9 +13,6 @@ export class CreateCampagnInput {
   @Field({ nullable: true })
   description?: string
 
-  @Field(() => String)
-  authorId: string
-
   @Field({ nullable: true })
   thumbnailUrl?: string;
 
@@ -36,4 +33,42 @@ export class CreateCampagnInput {
 
   @Field(() => [String])
   subCategories: string[];
-}
+};
+
+export class UpdateCampagnInput {
+  @Field(() => String)
+  id: string;
+
+  updatedBy?: ObjectId;
+  updatedAt?: Date;
+
+  @Field({ nullable: true })
+  campagnName?: string
+
+  @Field(() => [CAMPAGN_TYPE], { nullable: true })
+  campagnType?: CAMPAGN_TYPE[]
+
+  @Field({ nullable: true })
+  description?: string
+
+  @Field({ nullable: true })
+  thumbnailUrl?: string;
+
+  @Field({ nullable: true })
+  compagnyName?: string;
+
+  @Field(() => Date, { nullable: true })
+  startDate?: Date;
+
+  @Field(() => Date, { nullable: true })
+  endDate?: Date;
+
+  @Field({ nullable: true })
+  contry?: string;
+
+  @Field(() => [String], { nullable: true })
+  categories?: string[];
+
+  @Field(() => [String], { nullable: true })
+  subCategories?: string[];
+};

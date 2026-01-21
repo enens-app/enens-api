@@ -21,16 +21,19 @@ enum CAMPAGN_TYPE {
 
 type Campagns {
   _id: ID!
-  authorId: ID!
   campagnName: String
   campagnType: [CAMPAGN_TYPE!]
   categories: [String!]!
   compagnyName: String!
+  createdAt: DateTime!
+  createdBy: ID!
   description: String
   entrepriseId: ID
   objectifAmount: String
   subCategories: [String!]!
   thumbnailUrl: String
+  updatedAt: DateTime
+  updatedBy: ID
 }
 
 input ConnectUserInput {
@@ -39,7 +42,6 @@ input ConnectUserInput {
 }
 
 input CreateCampagnInput {
-  authorId: String!
   campagnName: String
   campagnType: [CAMPAGN_TYPE!]
   categories: [String!]!
@@ -60,10 +62,16 @@ input CreateUserInput {
   password: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Mutation {
   createNewCampagn(input: CreateCampagnInput!): Campagns!
   login(input: ConnectUserInput!): AuthPayload!
   signUp(input: CreateUserInput!): User!
+  updateCampagnInput(input: CreateCampagnInput!): Campagns!
 }
 
 type Query {
@@ -72,7 +80,7 @@ type Query {
   getAllCampagns: [Campagns!]!
   getHello: String!
   getUserById(id: String!): User!
-  getUserCampagns(authorId: String!): [Campagns!]!
+  getUserCampagns(id: String!): [Campagns!]!
 }
 
 """The role of the user in the system"""
