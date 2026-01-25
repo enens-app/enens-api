@@ -38,6 +38,10 @@ export class Campagn {
   @Column({ nullable: true })
   compagnyName?: string;
 
+  @Field(() => String)
+  @Column({ nullable: true })
+  title?: string;
+
   @Field(() => [String])
   @Column()
   categories: string[];

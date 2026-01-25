@@ -32,6 +32,7 @@ type Campagns {
   objectifAmount: String
   subCategories: [String!]!
   thumbnailUrl: String
+  title: String!
   updatedAt: DateTime
   updatedBy: ID
 }
@@ -52,6 +53,7 @@ input CreateCampagnInput {
   startDate: String
   subCategories: [String!]!
   thumbnailUrl: String
+  title: String
 }
 
 input CreateUserInput {
@@ -101,6 +103,7 @@ input UpdateCampagnInput {
   startDate: DateTime
   subCategories: [String!]
   thumbnailUrl: String
+  title: String
 }
 
 type User {
