@@ -7,6 +7,9 @@ export class CreateCampagnInput {
   @Field({ nullable: true })
   campagnName?: string
 
+  @Field({ nullable: true })
+  title?: string
+
   @Field(() => [CAMPAGN_TYPE], { nullable: true })
   campagnType?: CAMPAGN_TYPE[]
 
@@ -45,6 +48,9 @@ export class UpdateCampagnInput {
 
   @Field({ nullable: true })
   campagnName?: string
+
+  @Field({ nullable: true })
+  title?: string
 
   @Field(() => [CAMPAGN_TYPE], { nullable: true })
   campagnType?: CAMPAGN_TYPE[]
