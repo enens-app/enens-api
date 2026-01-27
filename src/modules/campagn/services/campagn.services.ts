@@ -1,21 +1,33 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { MongoRepository, ObjectLiteral, Repository } from 'typeorm';
 import { Campagn } from '../schema/campagn.schema';
 import { ObjectId } from 'mongodb';
-import { CreateCampagnInput, UpdateCampagnInput } from '../dtos/campagn.dtos';
-import { CAMPAGN_TYPE } from '../enum';
+import { CreateCampagnInput, FetchAllCampagnsArgs, UpdateCampagnInput } from '../dtos/campagn.dtos';
+import { paginate } from 'src/pagination';
 
 @Injectable()
 export class ProjectServices {
   constructor(
     @InjectRepository(Campagn)
-    private readonly projectRepository: Repository<Campagn>,
+    private readonly projectRepository: MongoRepository<Campagn>,
   ) {};
 
-  async findAllCampagns(): Promise<Campagn[]> {
-    const projects = await this.projectRepository.find();
-    return projects;
+  async findAllCampagns(queries: FetchAllCampagnsArgs) {
+    const { limit, page, searchText } = queries;
+    
+    const query: ObjectLiteral = {
+    }
+    if (searchText) query.campagnName = { $regex: searchText, $options: "i" };
+    return await paginate({
+      repo: this.projectRepository,
+      order: {
+        createdAt: "DESC"
+      },
+      query,
+      limit,
+      page,
+    })
   };
 
   async findUserCampagns(id: string): Promise<Campagn[]> {

@@ -69,6 +69,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input FetchAllCampagnsArgs {
+  categories: [String!]
+  limit: Int
+  page: Int
+  searchText: String
+  subCategories: [String!]
+}
+
 type Mutation {
   createNewCampagn(input: CreateCampagnInput!): Campagns!
   login(input: ConnectUserInput!): AuthPayload!
@@ -76,10 +84,17 @@ type Mutation {
   updateCampagnInput(input: UpdateCampagnInput!): Campagns!
 }
 
+type PaginatedCampgns {
+  countTotal: Int
+  currentPage: Int
+  data: [Campagns]
+  totalPages: Int
+}
+
 type Query {
   currentUser: User!
   findCampagnById(id: String!): Campagns!
-  getAllCampagns: [Campagns!]!
+  getAllCampagns(queries: FetchAllCampagnsArgs!): PaginatedCampgns!
   getHello: String!
   getUserById(id: String!): User!
   getUserCampagns(id: String!): [Campagns!]!

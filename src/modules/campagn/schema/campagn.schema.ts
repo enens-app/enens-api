@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
 import { Column, Entity, ObjectIdColumn } from 'typeorm';
 import { CAMPAGN_TYPE } from '../enum';
+import { paginate, paginatedType } from 'src/pagination';
 
 @ObjectType('Campagns')
 @Entity({ name: 'campagns' })
@@ -66,3 +67,6 @@ export class Campagn {
   @Column()
   updatedAt?: Date;
 }
+
+@ObjectType()
+export class PaginatedCampgns extends paginatedType(Campagn) {}
