@@ -29,7 +29,7 @@ export class Campagn {
 
   @Field(() => String, { nullable: true })
   @Column()
-  objectifAmount?: string;
+  objectifAmount?: number;
 
   @Field(() => ID,{ nullable: true })
   @Column()
@@ -55,6 +55,14 @@ export class Campagn {
   @Column()
   createdBy: ObjectId;
 
+  @Field(() => ID)
+  @Column()
+  deletedBy: ObjectId;
+  
+  @Field(() => Date)
+  @Column()
+  deletedAt: Date;
+
   @Field(() => Date)
   @Column()
   createdAt: Date;
@@ -66,6 +74,10 @@ export class Campagn {
   @Field(() => Date, { nullable: true })
   @Column()
   updatedAt?: Date;
+
+  @Field(() => Boolean, { nullable: true })
+  @Column()
+  isDeleted?: boolean;
 }
 
 @ObjectType()
