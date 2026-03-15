@@ -1,4 +1,4 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, ID, InputType } from "@nestjs/graphql";
 import { ObjectId } from "mongodb";
 import { CAMPAGN_TYPE } from "../enum";
 import { PaginationArgs } from "src/args";
@@ -41,7 +41,7 @@ export class CreateCampagnInput {
 
 @InputType()
 export class UpdateCampagnInput {
-  @Field(() => String)
+  @Field(() => ID)
   id: string;
 
   updatedBy?: ObjectId;
@@ -79,6 +79,15 @@ export class UpdateCampagnInput {
 
   @Field(() => [String], { nullable: true })
   subCategories?: string[];
+
+  @Field(() => String, { nullable: true })
+  objectifAmount?: number;
+
+  @Field(() => ID)
+  deletedBy: ObjectId;
+
+  @Field(() => Date)
+  deletedAt: Date;
 };
 
 @InputType()
@@ -88,4 +97,10 @@ export class FetchAllCampagnsArgs extends PaginationArgs {
 
   @Field(() => [String], { nullable: true })
   subCategories?: [string]
+}
+
+@InputType()
+export class FetchAllCampagnsByIdArgs extends PaginationArgs {
+  @Field(() => ID)
+  id: string;
 }
