@@ -7,8 +7,8 @@ export function ormConfig(): TypeOrmModuleOptions {
         synchronize: true,
         logging: false,
         autoLoadEntities: true,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        // useNewUrlParser: true,
+        // useUnifiedTopology: true,
         ssl: true,
         extra: {
         connectionLimit: null,
