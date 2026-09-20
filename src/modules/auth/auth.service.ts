@@ -34,7 +34,7 @@ export class AuthService {
     if (isUnique) {
       throw new HttpException(
         {
-          message: 'User already exist, please login !',
+          message: 'User already exists, please login !',
           error: 'email already exist',
         },
         HttpStatus.BAD_REQUEST,
