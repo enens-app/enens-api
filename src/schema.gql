@@ -14,46 +14,9 @@ type AuthPayload {
   userId: String!
 }
 
-enum CAMPAGN_TYPE {
-  FUND_RAISING_CAMPAGNE
-  PROMO_CAMPAGNE
-}
-
-type Campagns {
-  _id: ID!
-  campagnName: String
-  campagnType: [CAMPAGN_TYPE!]
-  categories: [String!]!
-  compagnyName: String!
-  createdAt: DateTime!
-  createdBy: ID!
-  description: String
-  entrepriseId: ID
-  objectifAmount: String
-  subCategories: [String!]!
-  thumbnailUrl: String
-  title: String!
-  updatedAt: DateTime
-  updatedBy: ID
-}
-
 input ConnectUserInput {
   email: String!
   password: String!
-}
-
-input CreateCampagnInput {
-  campagnName: String
-  campagnType: [CAMPAGN_TYPE!]
-  categories: [String!]!
-  compagnyName: String
-  contry: String
-  description: String
-  endDate: String
-  startDate: String
-  subCategories: [String!]!
-  thumbnailUrl: String
-  title: String
 }
 
 input CreateUserInput {
@@ -64,61 +27,21 @@ input CreateUserInput {
   password: String!
 }
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-input FetchAllCampagnsArgs {
-  categories: [String!]
-  limit: Int
-  page: Int
-  searchText: String
-  subCategories: [String!]
-}
-
 type Mutation {
-  createNewCampagn(input: CreateCampagnInput!): Campagns!
   login(input: ConnectUserInput!): AuthPayload!
   signUp(input: CreateUserInput!): User!
-  updateCampagnInput(input: UpdateCampagnInput!): Campagns!
-}
-
-type PaginatedCampgns {
-  countTotal: Int
-  currentPage: Int
-  data: [Campagns]
-  totalPages: Int
 }
 
 type Query {
   currentUser: User!
-  findCampagnById(id: String!): Campagns!
-  getAllCampagns(queries: FetchAllCampagnsArgs!): PaginatedCampgns!
   getHello: String!
   getUserById(id: String!): User!
-  getUserCampagns(id: String!): [Campagns!]!
 }
 
 """The role of the user in the system"""
 enum Role {
   ADMIN
   USER
-}
-
-input UpdateCampagnInput {
-  campagnName: String
-  campagnType: [CAMPAGN_TYPE!]
-  categories: [String!]
-  compagnyName: String
-  contry: String
-  description: String
-  endDate: DateTime
-  id: String!
-  startDate: DateTime
-  subCategories: [String!]
-  thumbnailUrl: String
-  title: String
 }
 
 type User {

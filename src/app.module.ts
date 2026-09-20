@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ormConfig } from './database/config/ormConfig';
-import { CampagnModules } from './modules/campagn/campagn.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
@@ -13,7 +12,7 @@ import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ".env",
+      envFilePath: '.env',
       load: [ormConfig],
       isGlobal: true,
     }),
@@ -26,9 +25,8 @@ import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
       context: ({ req, res }) => ({ req, res }),
     }),
     TypeOrmModule.forRoot(ormConfig()),
-    AuthModule, CampagnModules
+    AuthModule,
   ],
   providers: [AppService, AppController, JWTStrategy],
-  
 })
 export class AppModule {}
