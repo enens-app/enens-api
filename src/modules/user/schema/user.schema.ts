@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Entity, ObjectIdColumn, ObjectId, Column } from 'typeorm';
 import { Role } from '../dtos/user.DTO';
+import { AgencySchema } from 'src/modules/Agences/schema/agency.schema';
 
 
 @ObjectType()
@@ -48,32 +49,8 @@ export class UserSchema {
   @Field()
   @Column()
   accessToken: string;
-}
-
-@Entity({name: 'profiles'})
-@ObjectType('Profile')
-export class Profile {
-  @Field(() => ID)
-  @ObjectIdColumn()
-  _id: ObjectId;
 
   @Field(() => ID)
-  @Column({ type: String})
-  userId: ObjectId;
-  
-  @Field()
-  @Column({nullable: true})
-  biographie?: string
-
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  function?: string
-
-  @Field()
-  @Column({nullable: true})
-  profileUrl?: string
-
-  @Field(() => Address, { nullable: true })
-  @Column(() => Address)
-  Adress?: Address
+  @Column("objectId")
+  agencyId: ObjectId;
 }

@@ -19,11 +19,14 @@ import {
 } from '../user/dtos/user.DTO';
 import { UserSchema } from '../user/schema/user.schema';
 import { ObjectId } from 'mongodb';
+import { AgencySchema } from '../Agences/schema/agency.schema';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(UserSchema) private userRepo: Repository<UserSchema>,
+    @InjectRepository(AgencySchema)
+    private agencyRepo: Repository<AgencySchema>,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -50,6 +53,14 @@ export class AuthService {
     });
 
     const savedUser = await this.userRepo.save(newUser);
+    const newAgency = this.agencyRepo.create({
+      agencyName: input.agencyName,
+      ownerId: new ObjectId(savedUser._id),
+    });
+
+    const savedAgency = await this.agencyRepo.save(newAgency);
+    savedUser.agencyId = new ObjectId(savedAgency._id);
+    
     const { accessToken } = await this.generateToken(savedUser._id.toString());
     savedUser.accessToken = accessToken;
     await this.userRepo.save(savedUser);
@@ -58,12 +69,14 @@ export class AuthService {
   }
 
   async validateUser({ email, password }: ConnectUserInput) {
-    const user = this.userRepo.findOneByOrFail({ email });
-    const passwordMatch = await verify((await user).password, password);
+    const user = await this.userRepo.findOneByOrFail({ email });
+
+    const passwordMatch = await verify(user.password, password);
 
     if (!passwordMatch) {
-      throw new UnauthorizedException('Invalid creadentials');
+      throw new UnauthorizedException('Invalid credentials');
     }
+
     return user;
   }
 

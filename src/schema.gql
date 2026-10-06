@@ -2,10 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Address {
-  city: String
-  country: String
-  street: String
+type Agency {
+  _id: ID!
+  agencyName: String!
+  ownerId: ID!
 }
 
 type AuthPayload {
@@ -19,8 +19,14 @@ input ConnectUserInput {
   password: String!
 }
 
+input CreateAgencyInput {
+  agencyName: String!
+  ownerId: ID!
+}
+
 input CreateUserInput {
   accessToken: String
+  agencyName: String
   email: String!
   firstName: String!
   lastName: String!
@@ -28,11 +34,17 @@ input CreateUserInput {
 }
 
 type Mutation {
+  createAgency(input: CreateAgencyInput!): Agency!
+  deleteAgency(id: ID!): Agency!
   login(input: ConnectUserInput!): AuthPayload!
   signUp(input: CreateUserInput!): User!
+  updateAgency(id: ID!, input: UpdateAgencyInput!): Agency!
 }
 
 type Query {
+  agencies: [Agency!]!
+  agenciesByOwner(ownerId: ID!): [Agency!]!
+  agency(id: ID!): Agency!
   currentUser: User!
   getHello: String!
   getUserById(id: String!): User!
@@ -44,9 +56,15 @@ enum Role {
   USER
 }
 
+input UpdateAgencyInput {
+  agencyName: String
+  ownerId: ID
+}
+
 type User {
   _id: ID!
   accessToken: String!
+  agencyId: ID!
   email: String!
   firstName: String!
   lastName: String!

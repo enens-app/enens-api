@@ -8,6 +8,7 @@ import { ormConfig } from './database/config/ormConfig';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
+import { AgencyModule } from './modules/Agences/agency.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { JWTStrategy } from './modules/auth/strategies/jwt.strategie';
     }),
     TypeOrmModule.forRoot(ormConfig()),
     AuthModule,
+    AgencyModule,
   ],
   providers: [AppService, AppController, JWTStrategy],
 })
